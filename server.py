@@ -1,5 +1,6 @@
-from flask import Flask
-import request,jsonify
+from flask import Flask, request, jsonify
+from calculator import add_numbers, subtract_numbers
+
 
 app = Flask(__name__)
 
@@ -10,18 +11,19 @@ def greeting():
 
 @app.route("/calculator/add", methods=['POST'])
 def add():
-    jsonrequest = request.json
-    first = jsonrequest['first']
-    second = jsonrequest['second']
-    result = first+second
+    data = request.json
+    first = data['first']
+    second = data['second']
+    result = add_numbers(first, second)
     return jsonify(result=result), 200
+    
 
 @app.route("/calculator/subtract", methods=['POST'])
 def subtract():
-    jsonrequest = request.json
-    first = jsonrequest['first']
-    second = jsonrequest['second']
-    result = first-second
+    data = request.json
+    first = data['first']
+    second = data['second']
+    result = subtract_numbers(first, second)
     return jsonify(result=result), 200
 
 if __name__ == '__main__':
